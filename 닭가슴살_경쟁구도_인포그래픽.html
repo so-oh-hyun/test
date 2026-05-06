@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>닭가슴살 시장 경쟁구도 & 블루오션 인포그래픽</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    background: #0f0f1a;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .infographic {
+    width: 1200px;
+    background: #0f0f1a;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* TOP HEADER BAND */
+  .header-band {
+    background: linear-gradient(135deg, #1a0a2e 0%, #16213e 40%, #0d3350 100%);
+    padding: 36px 52px 28px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 2px solid rgba(233,69,96,0.3);
+  }
+  .header-band::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(233,69,96,0.15), transparent 70%);
+  }
+  .header-band::after {
+    content: '';
+    position: absolute; bottom: -60px; left: 40%;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(21,101,192,0.12), transparent 70%);
+  }
+  .header-inner { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .header-left {}
+  .header-tag {
+    display: inline-block;
+    background: #e94560; color: #fff;
+    font-size: 10px; font-weight: 800; letter-spacing: 2px;
+    padding: 4px 14px; border-radius: 20px; margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .header-title { font-size: 32px; font-weight: 900; line-height: 1.2; margin-bottom: 6px; }
+  .header-title span { color: #e94560; }
+  .header-sub { font-size: 13px; color: rgba(255,255,255,0.5); letter-spacing: 0.5px; }
+  .header-stats { display: flex; gap: 20px; }
+  .stat-box {
+    text-align: center;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; padding: 14px 20px;
+    min-width: 90px;
+  }
+  .stat-box .num { font-size: 30px; font-weight: 900; color: #e94560; line-height: 1; }
+  .stat-box .lbl { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 4px; font-weight: 600; letter-spacing: 0.5px; }
+
+  /* MAIN GRID */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 2px;
+    background: #1a1a2e;
+  }
+
+  .panel {
+    background: #12121f;
+    padding: 28px 32px;
+    position: relative;
+  }
+
+  .panel-label {
+    font-size: 9px; font-weight: 800; letter-spacing: 2px;
+    text-transform: uppercase; color: #e94560; margin-bottom: 6px;
+  }
+  .panel-title { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 20px; line-height: 1.3; }
+
+  /* PANEL A: Positioning Map (SVG) */
+  .panel-map { grid-column: 1; grid-row: 1 / 3; }
+
+  /* PANEL B: Brand Radar */
+  .panel-brands { grid-column: 2; grid-row: 1; }
+
+  /* PANEL C: Blue Ocean */
+  .panel-blue { grid-column: 2; grid-row: 2; }
+
+  /* BOTTOM: Strategy */
+  .bottom-band {
+    background: linear-gradient(135deg, #0d1b2a, #1a0a2e);
+    padding: 24px 52px 28px;
+    border-top: 2px solid rgba(233,69,96,0.2);
+  }
+  .bottom-label { font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #e94560; margin-bottom: 12px; }
+  .strat-row { display: flex; gap: 16px; }
+  .strat-card {
+    flex: 1; border-radius: 12px; padding: 16px 18px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .strat-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900; flex-shrink: 0;
+  }
+  .s1 .strat-num { background: #e94560; }
+  .s2 .strat-num { background: #1565c0; }
+  .s3 .strat-num { background: #2e7d32; }
+  .strat-title { font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+  .strat-desc { font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+  .strat-tag {
+    display: inline-block; margin-top: 6px;
+    font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px;
+  }
+  .s1 .strat-tag { background: rgba(233,69,96,0.2); color: #e94560; }
+  .s2 .strat-tag { background: rgba(21,101,192,0.2); color: #64b5f6; }
+  .s3 .strat-tag { background: rgba(46,125,50,0.2); color: #81c784; }
+
+  /* BRAND BAR CHART */
+  .brand-grid { display: flex; flex-direction: column; gap: 8px; }
+  .brand-row { display: flex; align-items: center; gap: 10px; }
+  .brand-name { width: 72px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.9); text-align: right; flex-shrink: 0; }
+  .bar-wrap { flex: 1; height: 22px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; display: flex; gap: 1px; }
+  .bar-seg {
+    height: 100%; display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.8);
+    transition: all 0.3s;
+    min-width: 2px;
+  }
+  .seg-price { background: #e94560; }
+  .seg-taste { background: #f57c00; }
+  .seg-conv  { background: #1565c0; }
+  .seg-brand { background: #2e7d32; }
+  .bar-total { width: 28px; font-size: 11px; font-weight: 800; color: #e94560; text-align: right; flex-shrink: 0; }
+
+  .bar-legend { display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+  .leg-item { display: flex; align-items: center; gap: 5px; font-size: 10px; color: rgba(255,255,255,0.6); }
+  .leg-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+  /* BLUE OCEAN PANELS */
+  .ocean-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .ocean-item {
+    border-radius: 10px; padding: 12px 14px;
+    background: rgba(21,101,192,0.12);
+    border: 1px solid rgba(21,101,192,0.3);
+    position: relative;
+  }
+  .ocean-item::before {
+    content: '🔵';
+    position: absolute; top: 8px; right: 10px; font-size: 14px;
+  }
+  .ocean-title { font-size: 12px; font-weight: 800; color: #64b5f6; margin-bottom: 5px; line-height: 1.3; }
+  .ocean-desc { font-size: 10px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+
+  /* FOOTER */
+  .footer-band {
+    background: #0a0a12;
+    padding: 12px 52px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .footer-note { font-size: 10px; color: rgba(255,255,255,0.3); }
+  .footer-date { font-size: 10px; color: rgba(255,255,255,0.3); }
+</style>
+</head>
+<body>
+<div class="infographic">
+
+  <!-- HEADER -->
+  <div class="header-band">
+    <div class="header-inner">
+      <div class="header-left">
+        <div class="header-tag">Competitive Intelligence</div>
+        <div class="header-title">닭가슴살 시장 <span>경쟁구도</span> & 블루오션</div>
+        <div class="header-sub">국내 상위 10개 브랜드 포지셔닝 분석 · 2026년 3월</div>
+      </div>
+      <div class="header-stats">
+        <div class="stat-box"><div class="num">10</div><div class="lbl">분석 브랜드</div></div>
+        <div class="stat-box"><div class="num">6</div><div class="lbl">블루오션 공백</div></div>
+        <div class="stat-box"><div class="num">3</div><div class="lbl">차별화 전략</div></div>
+        <div class="stat-box" style="min-width:110px;"><div class="num" style="font-size:18px; padding-top:4px;">700~2,500</div><div class="lbl">100g당 가격대(원)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- PANEL A: SVG MAP -->
+    <div class="panel panel-map">
+      <div class="panel-label">Positioning Map</div>
+      <div class="panel-title">가격대별 포지셔닝 맵</div>
+
+      <svg viewBox="0 0 480 400" xmlns="http://www.w3.org/2000/svg" style="width:100%; border-radius:10px;">
+        <!-- Background -->
+        <rect width="480" height="400" fill="#0d0d1a" rx="8"/>
+
+        <!-- Zone backgrounds -->
+        <!-- 저가+대중 -->
+        <rect x="40" y="220" width="190" height="150" fill="#f57c00" opacity="0.06" rx="4"/>
+        <!-- 저가+전문가 -->
+        <rect x="40" y="30" width="190" height="185" fill="#2e7d32" opacity="0.06" rx="4"/>
+        <!-- 프리미엄+대중 -->
+        <rect x="235" y="220" width="215" height="150" fill="#1565c0" opacity="0.08" rx="4"/>
+        <!-- 프리미엄+전문가 = 기존 경쟁 구간 -->
+        <rect x="235" y="30" width="215" height="185" fill="#e94560" opacity="0.06" rx="4"/>
+
+        <!-- Blue ocean highlight -->
+        <rect x="120" y="35" width="165" height="120" fill="#1565c0" opacity="0.14" rx="6"
+              stroke="#1565c0" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <text x="202" y="58" text-anchor="middle" font-size="9" fill="#64b5f6" font-weight="800" opacity="0.9">🔵 블루오션</text>
+        <text x="202" y="70" text-anchor="middle" font-size="8" fill="#64b5f6" opacity="0.7">중간가 × 전문가</text>
+        <text x="202" y="82" text-anchor="middle" font-size="8" fill="#64b5f6" opacity="0.7">일상 단백질 공백</text>
+
+        <!-- Axes -->
+        <line x1="40" y1="375" x2="445" y2="375" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+        <polygon points="445,371 453,375 445,379" fill="rgba(255,255,255,0.3)"/>
+        <line x1="40" y1="375" x2="40" y2="25" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+        <polygon points="36,25 40,17 44,25" fill="rgba(255,255,255,0.3)"/>
+
+        <!-- Grid lines -->
+        <line x1="40" y1="220" x2="445" y2="220" stroke="rgba(255,255,255,0.07)" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="237" y1="25" x2="237" y2="375" stroke="rgba(255,255,255,0.07)" stroke-width="1" stroke-dasharray="4,4"/>
+
+        <!-- Axis labels -->
+        <text x="55" y="393" font-size="10" fill="rgba(255,255,255,0.5)" font-weight="700">저가</text>
+        <text x="218" y="393" font-size="10" fill="rgba(255,255,255,0.5)" font-weight="700">중간가</text>
+        <text x="400" y="393" font-size="10" fill="rgba(255,255,255,0.5)" font-weight="700">프리미엄</text>
+        <text x="456" y="380" font-size="9" fill="rgba(255,255,255,0.4)">→</text>
+        <text x="8" y="378" font-size="9" fill="rgba(255,255,255,0.5)" font-weight="700">대중</text>
+        <text x="5" y="235" font-size="9" fill="rgba(255,255,255,0.5)" font-weight="700">중간</text>
+        <text x="3" y="75" font-size="9" fill="rgba(255,255,255,0.5)" font-weight="700">전문가</text>
+        <text x="8" y="25" font-size="9" fill="rgba(255,255,255,0.4)">↑</text>
+
+        <!-- Zone labels -->
+        <text x="135" y="355" text-anchor="middle" font-size="9" fill="rgba(245,124,0,0.6)" font-weight="700">저가 · 대중</text>
+        <text x="340" y="355" text-anchor="middle" font-size="9" fill="rgba(21,101,192,0.7)" font-weight="700">프리미엄 · 대중</text>
+        <text x="340" y="50" text-anchor="middle" font-size="9" fill="rgba(233,69,96,0.7)" font-weight="700">프리미엄 · 전문가</text>
+        <text x="85" y="215" text-anchor="middle" font-size="9" fill="rgba(46,125,50,0.7)" font-weight="700">저가 · 전문가</text>
+
+        <!-- BRANDS as bubbles -->
+        <!-- 하림: 저가(x=80), 대중(y=310) -->
+        <circle cx="80" cy="310" r="26" fill="#e53935" opacity="0.88"/>
+        <text x="80" y="307" text-anchor="middle" font-size="11" fill="white" font-weight="800">하림</text>
+        <text x="80" y="320" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.8)">가성비</text>
+
+        <!-- 잇메이트: 저가(x=90), 전문가(y=155) -->
+        <circle cx="95" cy="160" r="20" fill="#fb8c00" opacity="0.9"/>
+        <text x="95" y="157" text-anchor="middle" font-size="9" fill="white" font-weight="800">잇메이트</text>
+        <text x="95" y="168" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.8)">저가·저염</text>
+
+        <!-- 허닭: 중간(x=205), 전문가(y=125) -->
+        <circle cx="210" cy="130" r="22" fill="#7b1fa2" opacity="0.88"/>
+        <text x="210" y="127" text-anchor="middle" font-size="10" fill="white" font-weight="800">허닭</text>
+        <text x="210" y="138" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.8)">간편식</text>
+
+        <!-- 맛있닭: 중간(x=235), 전문가(y=108) -->
+        <circle cx="242" cy="108" r="21" fill="#0288d1" opacity="0.88"/>
+        <text x="242" y="105" text-anchor="middle" font-size="9" fill="white" font-weight="800">맛있닭</text>
+        <text x="242" y="116" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.8)">소프트</text>
+
+        <!-- 한끼통살: 중간(x=258), 전문가(y=125) -->
+        <circle cx="270" cy="130" r="19" fill="#00838f" opacity="0.88"/>
+        <text x="270" y="127" text-anchor="middle" font-size="9" fill="white" font-weight="800">한끼통살</text>
+        <text x="270" y="138" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.8)">통살</text>
+
+        <!-- 햇살닭: 중저가(x=160), 전문가(y=165) -->
+        <circle cx="163" cy="168" r="18" fill="#558b2f" opacity="0.88"/>
+        <text x="163" y="165" text-anchor="middle" font-size="9" fill="white" font-weight="800">햇살닭</text>
+        <text x="163" y="176" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.8)">소스닭</text>
+
+        <!-- 열두닭: 중간(x=265), 전문가(y=155) -->
+        <circle cx="272" cy="160" r="18" fill="#5d4037" opacity="0.88"/>
+        <text x="272" y="157" text-anchor="middle" font-size="9" fill="white" font-weight="800">열두닭</text>
+        <text x="272" y="168" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.8)">오븐구이</text>
+
+        <!-- 아임닭: 중고가(x=345), 전문가(y=100) -->
+        <circle cx="350" cy="105" r="23" fill="#e91e63" opacity="0.88"/>
+        <text x="350" y="102" text-anchor="middle" font-size="10" fill="white" font-weight="800">아임닭</text>
+        <text x="350" y="113" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.8)">간식형</text>
+
+        <!-- CJ 더건강한: 프리미엄(x=390), 대중(y=280) -->
+        <circle cx="393" cy="280" r="26" fill="#1565c0" opacity="0.88"/>
+        <text x="393" y="275" text-anchor="middle" font-size="9" fill="white" font-weight="800">CJ</text>
+        <text x="393" y="286" text-anchor="middle" font-size="8" fill="white">더건강한</text>
+        <text x="393" y="296" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,0.8)">대중·가족</text>
+
+        <!-- 굽네: 프리미엄(x=400), 중간(y=175) -->
+        <circle cx="410" cy="175" r="22" fill="#f57f17" opacity="0.88"/>
+        <text x="410" y="172" text-anchor="middle" font-size="10" fill="white" font-weight="800">굽네</text>
+        <text x="410" y="183" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.8)">오븐구이</text>
+
+        <!-- Our target mark -->
+        <circle cx="178" cy="98" r="16" fill="none" stroke="#e94560" stroke-width="2" stroke-dasharray="4,3" opacity="0.9"/>
+        <text x="178" y="95" text-anchor="middle" font-size="9" fill="#e94560" font-weight="900">WE</text>
+        <text x="178" y="107" text-anchor="middle" font-size="8" fill="#e94560">공략지</text>
+
+        <!-- Legend -->
+        <rect x="42" y="32" width="76" height="40" fill="rgba(0,0,0,0.5)" rx="5"/>
+        <text x="50" y="46" font-size="8" fill="rgba(255,255,255,0.7)" font-weight="700">버블 크기 = 규모</text>
+        <circle cx="52" cy="60" r="4" fill="#e53935" opacity="0.9"/>
+        <text x="60" y="63" font-size="8" fill="rgba(255,255,255,0.5)">저가 브랜드</text>
+      </svg>
+    </div>
+
+    <!-- PANEL B: Brand Score Bars -->
+    <div class="panel panel-brands">
+      <div class="panel-label">Brand Score Analysis</div>
+      <div class="panel-title">브랜드별 경쟁력 점수 (5점 척도)</div>
+
+      <div class="bar-legend">
+        <div class="leg-item"><div class="leg-dot" style="background:#e94560;"></div>가격경쟁력</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#f57c00;"></div>맛/식감</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#1565c0;"></div>편의성</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#2e7d32;"></div>브랜드 인지도</div>
+      </div>
+
+      <div class="brand-grid">
+        <!-- 하림: 5,3,3,5 = 16 -->
+        <div class="brand-row">
+          <div class="brand-name">하림</div>
+          <div class="bar-wrap">
+            <div class="bar-seg seg-price" style="width:25%;">5</div>
+            <div class="bar-seg seg-taste" style="width:15%;">3</div>
+            <div class="bar-seg seg-conv" style="width:15%;">3</div>
+            <div class="bar-seg seg-brand" style="width:25%;">5</div>
+          </div>
+          <div class="bar-total">16</div>
+        </div>
+        <!-- 허닭: 3,4,5,4 = 16 -->
+        <div class="brand-row">
+          <div class="brand-name">허닭</div>
+          <div class="bar-wrap">
+            <div class="bar-seg seg-price" style="width:15%;">3</div>
+            <div class="bar-seg seg-taste" style="width:20%;">4</div>
+            <div class="bar-seg seg-conv" style="width:25%;">5</div>
+            <div class="bar-seg seg-brand" style="width:20%;">4</div>
+          </div>
+          <div class="bar-total">16</div>
+        </div>
+        <!-- 맛있닭: 3,5,4,4 = 16 -->
+        <div class="brand-row">
+          <div class="brand-name">맛있닭</div>
+          <div class="bar-wrap">
+            <div class="bar-seg seg-price" style="width:15%;">3</div>
+            <div class="bar-seg seg-taste" style="width:25%;">5</div>
+            <div class="bar-seg seg-conv" style="width:20%;">4</div>
+            <div class="bar-seg seg-brand" style="width:20%;">4</div>
+          </div>
+          <div class="bar-total">16</div>
+        </div>
+        <!-- 아임닭: 2,5,4,4 = 15 -->
+        <div class="brand-row">
+          <div class="brand-name">아임닭</div>
+          <div class="bar-wrap">
+            <div class="bar-seg seg-price" style="width:10%;">2</div>
+            <div class="bar-seg seg-taste" style="width:25%;">5</div>
+            <div class="bar-seg seg-conv" style="width:20%;">4</div>
+            <div class="bar-seg seg-brand" style="width:20%;">4</div>
+          </div>
+          <div class="bar-total">15</div>
+        </div>
+        <!-- 잇메이트: 5,3,3,3 = 14 -->
+        <div class="brand-row">
+          <div class="brand-name">잇메이트</div>
+          <div class="bar-wrap">
+            <div class="bar-seg seg-price" style="width:25%;">5</div>
+            <div class="bar-seg seg-taste" style="width:15%;">3</div>
+            <div class="bar-seg seg-conv" style="width:15%;">3</div>
+            <div class="bar-seg seg-brand" style="width:15%;">3</div>
+          </div>
+          <div class="bar-total">14</div>
+        </div>
+        <!-- 한끼통살: 3,4,4,3 = 14 -->
+        <div class="brand-row">
+          <div class="brand-name">한끼통살</div>
+          <div class="bar-wrap">
+            <div class="bar-seg seg-price" style="width:15%;">3</div>
+            <div class="bar-seg seg-taste" style="width:20%;">4</div>
+            <div class="bar-seg seg-conv" style="width:20%;">4</div>
+            <div class="bar-seg seg-brand" style="width:15%;">3</div>
+          </div>
+          <div class="bar-total">14</div>
+        </div>
+        <!-- CJ: 2,4,5,5 = 16 -->
+        <div class="brand-row">
+          <div class="brand-name">CJ 더건강한</div>
+          <div class="bar-wrap">
+            <div class="bar-seg seg-price" style="width:10%;">2</div>
+            <div class="bar-seg seg-taste" style="width:20%;">4</div>
+            <div class="bar-seg seg-conv" style="width:25%;">5</div>
+            <div class="bar-seg seg-brand" style="width:25%;">5</div>
+          </div>
+          <div class="bar-total">16</div>
+        </div>
+        <!-- 굽네: 2,5,3,4 = 14 -->
+        <div class="brand-row">
+          <div class="brand-name">굽네</div>
+          <div class="bar-wrap">
+            <div class="bar-seg seg-price" style="width:10%;">2</div>
+            <div class="bar-seg seg-taste" style="width:25%;">5</div>
+            <div class="bar-seg seg-conv" style="width:15%;">3</div>
+            <div class="bar-seg seg-brand" style="width:20%;">4</div>
+          </div>
+          <div class="bar-total">14</div>
+        </div>
+        <!-- 햇살닭: 4,4,3,3 = 14 -->
+        <div class="brand-row">
+          <div class="brand-name">햇살닭</div>
+          <div class="bar-wrap">
+            <div class="bar-seg seg-price" style="width:20%;">4</div>
+            <div class="bar-seg seg-taste" style="width:20%;">4</div>
+            <div class="bar-seg seg-conv" style="width:15%;">3</div>
+            <div class="bar-seg seg-brand" style="width:15%;">3</div>
+          </div>
+          <div class="bar-total">14</div>
+        </div>
+        <!-- 열두닭: 3,4,3,3 = 13 -->
+        <div class="brand-row">
+          <div class="brand-name">열두닭</div>
+          <div class="bar-wrap">
+            <div class="bar-seg seg-price" style="width:15%;">3</div>
+            <div class="bar-seg seg-taste" style="width:20%;">4</div>
+            <div class="bar-seg seg-conv" style="width:15%;">3</div>
+            <div class="bar-seg seg-brand" style="width:15%;">3</div>
+          </div>
+          <div class="bar-total">13</div>
+        </div>
+      </div>
+
+      <!-- Key insight -->
+      <div style="margin-top:16px; padding:12px 14px; background:rgba(233,69,96,0.08); border-left:3px solid #e94560; border-radius:0 6px 6px 0;">
+        <div style="font-size:10px; font-weight:800; color:#e94560; margin-bottom:3px;">⚡ KEY INSIGHT</div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.65); line-height:1.5;">
+          <strong style="color:#fff;">가격 + 맛 + 편의성을 동시에 5점</strong>으로 달성한 브랜드는 현재 <strong style="color:#e94560;">0개</strong> — 이것이 진입 기회입니다.
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL C: Blue Ocean -->
+    <div class="panel panel-blue">
+      <div class="panel-label">Blue Ocean Spaces</div>
+      <div class="panel-title">경쟁이 약한 시장 공백 6곳</div>
+
+      <div class="ocean-grid">
+        <div class="ocean-item">
+          <div class="ocean-title">중간가 × 대중화<br>"일상 단백질"</div>
+          <div class="ocean-desc">다이어트 이미지 탈피한 일상 반찬형 닭가슴살 공백</div>
+        </div>
+        <div class="ocean-item">
+          <div class="ocean-title">기능성 근거<br>헬스 전문 프리미엄</div>
+          <div class="ocean-desc">BCAA·단백질 지표 기반 운동 전문 라인 전무</div>
+        </div>
+        <div class="ocean-item">
+          <div class="ocean-title">시니어 · 4050<br>고령층 단백질</div>
+          <div class="ocean-desc">근감소증 예방·연화식 콘셉트 브랜드 없음</div>
+        </div>
+        <div class="ocean-item">
+          <div class="ocean-title">편의점 × 오프라인<br>냉장 간편식</div>
+          <div class="ocean-desc">CJ 외 전체 브랜드가 온라인 전용, 오프라인 공백</div>
+        </div>
+        <div class="ocean-item">
+          <div class="ocean-title">친환경 클린라벨<br>동물복지 인증</div>
+          <div class="ocean-desc">MZ 가치소비 수요 대응 브랜드 전무</div>
+        </div>
+        <div class="ocean-item">
+          <div class="ocean-title">AI 맞춤 구독<br>목표 기반 식단</div>
+          <div class="ocean-desc">단순 정기배송 이상의 개인화 서비스 없음</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end main-grid -->
+
+  <!-- BOTTOM STRATEGY BAND -->
+  <div class="bottom-band">
+    <div class="bottom-label">Recommended Differentiation Strategies · 3 Key Approaches</div>
+    <div class="strat-row">
+      <div class="strat-card s1">
+        <div class="strat-num">1</div>
+        <div>
+          <div class="strat-title">맛있는 일상 단백질 — 대중화 전략</div>
+          <div class="strat-desc">중간가(1,200~1,500원) · 소프트 수비드 + 다양한 소스 · 일상 반찬형 포지셔닝</div>
+          <div class="strat-tag">즉시 실행 · 100g당 1,200~1,500원</div>
+        </div>
+      </div>
+      <div class="strat-card s2">
+        <div class="strat-num">2</div>
+        <div>
+          <div class="strat-title">기능성 헬스 전문 프리미엄 라인</div>
+          <div class="strat-desc">단백질 27g+ · BCAA 강조 · 운동목적별 3종 · 헬스장 B2B 납품 선진입</div>
+          <div class="strat-tag">6개월 내 · 100g당 1,800~2,200원</div>
+        </div>
+      </div>
+      <div class="strat-card s3">
+        <div class="strat-num">3</div>
+        <div>
+          <div class="strat-title">편의점 + AI 맞춤 구독 서비스</div>
+          <div class="strat-desc">소용량 냉장 편의점 입점 · 목표별 주간 조합 자동 추천 · 월 3만원 락인 구독</div>
+          <div class="strat-tag">1년 내 · 구독 월 3만원대</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-band">
+    <div class="footer-note">본 인포그래픽은 온라인 기준 상위 10개 브랜드의 공개 정보를 바탕으로 작성되었습니다.</div>
+    <div class="footer-date">Competitive Intelligence Report · March 2026</div>
+  </div>
+
+</div>
+</body>
+</html>
